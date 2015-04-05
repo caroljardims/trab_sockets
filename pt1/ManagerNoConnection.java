@@ -50,7 +50,7 @@ public class ManagerNoConnection {
                 }
                 else{
                     ProxyC consumidor = new ProxyC(rcb.getPort(),rcb.getAddress(),toSend);
-                    consumidor.run();
+                    consumidor.start();
                 }
             }
         }

@@ -7,10 +7,10 @@ import java.nio.*;
  *
  * @author caroline
  */
-public class ManagerConnection {
+public class ManagerNoConnection {
     
     public static void main(String[] args) throws IOException {
-        ManagerConnection servidor = new ManagerConnection();
+        ManagerNoConnection servidor = new ManagerNoConnection();
         servidor.server();
     }
     

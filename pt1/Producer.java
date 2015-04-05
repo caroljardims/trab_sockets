@@ -19,7 +19,6 @@ public class Producer {
     public void produz(int porta, String server) throws IOException{
         int MAX = 20;
         InetAddress ip = InetAddress.getByName(server);
-        int count = 0;
         for(int i=0;i<10000;i++){
             Random gerador = new Random();
             short valor = (short)gerador.nextInt(100);
@@ -31,7 +30,6 @@ public class Producer {
             skt.send(pkg);
             skt.close();
         }
-        System.out.println(count);
     }
 
     public static byte[] short2byte(short value, int max) {

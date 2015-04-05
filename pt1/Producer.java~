@@ -16,26 +16,22 @@ public class Producer {
         
     }
     
-    public void produz(int port, String server) throws IOException{
+    public void produz(int porta, String server) throws IOException{
         int MAX = 20;
         InetAddress ip = InetAddress.getByName(server);
+        int count = 0;
         for(int i=0;i<10000;i++){
-
             Random gerador = new Random();
             short valor = (short)gerador.nextInt(100);
             byte[] dado = new byte[MAX];
             if(valor > 0) dado = short2byte(valor,MAX);
             else dado = short2byte((short)20,MAX);
-            
-            Socket skt = new Socket(ip,port);
-            BufferedOutputStream buffOut = new BufferedOutputStream(skt.getOutputStream());
-            
-            buffOut.write(dado, 0, dado.length);
-            buffOut.flush();
-            
+            DatagramPacket pkg = new DatagramPacket(dado, dado.length, ip, porta);
+            DatagramSocket skt = new DatagramSocket();
+            skt.send(pkg);
             skt.close();
         }
-        System.out.println(" >> Produzi! ");
+        System.out.println(count);
     }
 
     public static byte[] short2byte(short value, int max) {
@@ -43,5 +39,8 @@ public class Producer {
         ByteBuffer buffer = ByteBuffer.allocate(bytes.length);
         buffer.putShort(value);
         return buffer.array();   
+    }
+    public static short byte2short(byte[] range) {
+        return (short)((range[1] << 8) + (range[0] & 0xff));
     }
 }

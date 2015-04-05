@@ -1,0 +1,35 @@
+import java.lang.*;
+import java.io.*;
+import java.net.*;
+import java.util.*;
+import java.nio.*;
+
+/**
+ *
+ * @author caroline
+ */
+
+public class ProxyC implements Runnable {
+
+	private int port;
+	private InetAddress address;
+	private byte[] dado;
+
+	public ProxyC(int port, InetAddress address, byte[] dado) {
+        this.port = port;
+		this.address = address;
+		this.dado = dado;
+	}
+	
+	public void run() {
+		execute();
+	}
+
+	public void execute() throws IOException {
+		DatagramPacket pkt = new DatagramPacket(dado, dado.length, address, port);
+        DatagramSocket ans = new DatagramSocket();
+        ans.send(pkt);
+        ans.close();
+        System.out.println(" >> resposta enviada ");
+	}
+}
