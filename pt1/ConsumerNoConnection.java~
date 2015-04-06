@@ -26,12 +26,14 @@ public class ConsumerNoConnection {
             DatagramPacket pkg = new DatagramPacket(dado, dado.length, ip, port);
             DatagramSocket skt = new DatagramSocket();
             skt.send(pkg);
-            DatagramPacket rcb = new DatagramPacket(dado, dado.length);
+			
+			skt.setSoTimeout(5000);
+			DatagramPacket rcb = new DatagramPacket(dado, dado.length);
             skt.receive(rcb);
             dado = rcb.getData();
             short valor = byte2short(dado);
             if(valor <= 0) break;
-            sum += valor;
+            sum += (int)valor;
             skt.close();
         }
         System.out.println(" > Soma: " + sum);

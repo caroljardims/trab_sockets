@@ -27,7 +27,7 @@ public class ServerConnection extends Thread{
 		} 
 		else {
 			short value = ca.pop();
-			if(value == (short)0)
+			if(value == 0)
                     System.out.println(" > Area Critica vazia.");
 			sendAnswer(value,dado,buffOut);
 		}

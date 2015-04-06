@@ -23,7 +23,6 @@ public class Producer {
             Random gerador = new Random();
 			short valor = (short)gerador.nextInt();
             if (valor <= 0) valor = (short)i; 
-			System.out.println(valor);
             byte[] dado = new byte[MAX];
             if(valor > 0) dado = short2byte(valor,MAX);
             else dado = short2byte((short)20,MAX);

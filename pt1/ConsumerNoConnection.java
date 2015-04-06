@@ -11,14 +11,14 @@ public class ConsumerNoConnection {
 
     public static void main(String[] args) throws IOException {
         ConsumerNoConnection cliente = new ConsumerNoConnection();
-        cliente.client(8080,"localhost");
+        cliente.client(8080,"172.21.1.13");
         
     }
     
     public void client(int port, String address) throws IOException{
         int MAX = 20;
         int sum = 0;
-        
+        int count = 0;
         InetAddress ip = InetAddress.getByName(address);
         
         while(true){   
@@ -26,16 +26,27 @@ public class ConsumerNoConnection {
             DatagramPacket pkg = new DatagramPacket(dado, dado.length, ip, port);
             DatagramSocket skt = new DatagramSocket();
             skt.send(pkg);
-            DatagramPacket rcb = new DatagramPacket(dado, dado.length);
-            skt.receive(rcb);
-            dado = rcb.getData();
-            short valor = byte2short(dado);
-            if(valor <= 0) break;
-            sum += (int)valor;
+			
+			skt.setSoTimeout(3000);
+            try{
+    			DatagramPacket rcb = new DatagramPacket(dado, dado.length);
+                skt.receive(rcb);
+                dado = rcb.getData();
+                short valor = byte2short(dado);
+                if(valor <= 0) break;
+                sum += (int)valor;
+            } catch(SocketTimeoutException e){
+                //e.printStackTrace();
+                System.out.println(" >> Mensagem nao recebida ");
+                count ++;
+                if(count == 3) break;
+            }
             skt.close();
         }
-        System.out.println(" > Soma: " + sum);
-        if(sum < 0) System.out.println(" >> Erro (valor da soma negativo).\n Execute novamente as requisicoes ");
+        if(count < 3){
+            System.out.println(" > Soma: " + sum);
+            if(sum < 0) System.out.println(" >> Erro (valor da soma negativo).\n Execute novamente as requisicoes ");
+        } else System.out.println(" >> Execucao finalizada; ");
     }
 
     public static byte[] short2byte(short value, int max) {

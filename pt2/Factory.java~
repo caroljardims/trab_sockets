@@ -24,7 +24,6 @@ public class Factory {
 
         System.out.println(" > Servidor Inicializado ");
         while(true){
-
             if(criticalArea.isEmpty()){ 
                 System.out.println(" >> Fim de Execucao.");
                 break;
