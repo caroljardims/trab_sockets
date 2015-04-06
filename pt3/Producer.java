@@ -19,11 +19,11 @@ public class Producer {
     public void produz(int port, String address) throws ClassNotFoundException,SocketException,IOException{
         InetAddress ip = InetAddress.getByName(address);
         Socket skt = null;
-        for(int i=0;i<10000;i++){
+        for(int i=0;i<20;i++){
             skt = new Socket(ip,port);
             Random gerador = new Random();
             short valor = (short)gerador.nextInt();
-            while (valor <= 0) valor = (short)gerador.nextInt();
+            if (valor <= 0) valor = (short)i; 
             Mensagem push = new Mensagem("PUSH",(short)valor);
             ObjectOutputStream objOut = new ObjectOutputStream(skt.getOutputStream());
             objOut.writeObject(push);

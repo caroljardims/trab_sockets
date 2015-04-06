@@ -11,7 +11,7 @@ public class ConsumerNoConnection {
 
     public static void main(String[] args) throws IOException {
         ConsumerNoConnection cliente = new ConsumerNoConnection();
-        cliente.client(8080,"172.21.1.13");
+        cliente.client(8080,"localhost");
         
     }
     
@@ -46,7 +46,7 @@ public class ConsumerNoConnection {
         if(count < 3){
             System.out.println(" > Soma: " + sum);
             if(sum < 0) System.out.println(" >> Erro (valor da soma negativo).\n Execute novamente as requisicoes ");
-        } else System.out.println(" >> Execucao finalizada; ");
+        } else System.out.println(" >> Execucao finalizada. ");
     }
 
     public static byte[] short2byte(short value, int max) {
