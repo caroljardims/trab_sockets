@@ -33,11 +33,12 @@ public class ServerStream extends Thread{
 						msg.setNumero(value);
 						objOut.writeObject(msg);
 						objOut.flush();
+						//System.out.println(" > Enviando pacote " + value + " ao consumidor.");
 					}
 					if (value == 0)
-						System.out.println(" > Area Critica vazia.");						
+						System.out.println(" > Finaliza transimssao.");						
 				}
-				//skt.close();
+				skt.close();
 			}
 		} catch(SocketException e){
             e.printStackTrace();

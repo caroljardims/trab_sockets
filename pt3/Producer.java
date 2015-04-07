@@ -25,7 +25,7 @@ public class Producer {
                 Random gerador = new Random();
                 short valor = (short)gerador.nextInt();
                 if (valor <= 0) valor = (short)i; 
-                Mensagem push = new Mensagem("PUSH",(short)valor);
+                Mensagem push = new Mensagem("PUSH",valor);
                 ObjectOutputStream objOut = new ObjectOutputStream(skt.getOutputStream());
                 objOut.writeObject(push);
                 objOut.flush();
