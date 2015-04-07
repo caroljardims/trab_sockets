@@ -37,12 +37,20 @@ public class ServerStream extends Thread{
 					if (value == 0)
 						System.out.println(" > Area Critica vazia.");						
 				}
-				skt.close();
+				//skt.close();
 			}
 		} catch(SocketException e){
             e.printStackTrace();
         } catch(IOException e1){
         	e1.printStackTrace();
-        }
+        } finally {
+                try {
+                    if (skt != null) {
+                        skt.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+        	}
 	}
 }

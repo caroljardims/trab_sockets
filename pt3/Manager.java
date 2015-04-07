@@ -28,6 +28,7 @@ public class Manager {
         while(true){
             if(criticalArea.isEmpty()){ 
                 System.out.println(" >> Terminar Execucao. ");
+                skt.close();
                 break;
             }
             try{
