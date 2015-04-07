@@ -24,7 +24,7 @@ public class ServerStream extends Thread{
 
 				if((msg.getTipo()).equals("PUSH")){
 					pilha.push(msg.getNumero());
-					skt.close();
+					//skt.close();
 				}
 				else if ((msg.getTipo()).equals("POP")) {
 					short value = pilha.pop();
@@ -39,8 +39,10 @@ public class ServerStream extends Thread{
 				}
 				skt.close();
 			}
-		} catch (IOException | ClassNotFoundException e){
-			e.printStackTrace();
-		}
+		} catch(SocketException e){
+            e.printStackTrace();
+        } catch(IOException e1){
+        	e1.printStackTrace();
+        }
 	}
 }

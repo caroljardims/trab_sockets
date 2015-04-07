@@ -14,7 +14,7 @@ public class Manager {
         servidor.server();
     }
     
-    public void server() throws ClassNotFoundException, SocketException, IOException, InterruptedException{
+    public void server() throws ClassNotFoundException, IOException, InterruptedException{
         
         ServerSocket call = new ServerSocket(8080);
         Socket skt = null;
@@ -30,9 +30,13 @@ public class Manager {
                 System.out.println(" >> Terminar Execucao. ");
                 break;
             }
-            skt = call.accept();
-            ServerStream server = new ServerStream(skt,criticalArea);
-            server.start();
+            try{
+                skt = call.accept();
+                ServerStream server = new ServerStream(skt,criticalArea);
+                server.start();
+            } catch (SocketException e){
+                //e.printStackTrace();
+            }
         }
     }
 }
