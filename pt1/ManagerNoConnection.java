@@ -22,6 +22,10 @@ public class ManagerNoConnection {
         for(int i=0;i<4;i++) criticalArea.push(zero);
         
         while(true){
+            if(criticalArea.isEmpty()){ 
+                System.out.println(" >> Fim de Execucao.");
+                break;
+            }
             System.out.println("Aguardando requisicao");
             
             int MAX = 20;
@@ -30,7 +34,10 @@ public class ManagerNoConnection {
 
             DatagramPacket rcb = new DatagramPacket(dado, dado.length);
             skt.receive(rcb);
-            short conteudo = byte2short(rcb.getData());
+            String content = new String(rcb.getData());
+            System.out.println(content);
+            int valorInt = Integer.parseInt(content.trim());
+            short conteudo = (short)valorInt;
             if(conteudo != 0){
                 System.out.println(" > Recebido\n >> produtor ");
                 criticalArea.push(conteudo);
@@ -38,34 +45,15 @@ public class ManagerNoConnection {
             else{ 
                 System.out.println(" > Recebido\n >> consumidor ");
                 short value = criticalArea.pop();
-                byte[] toSend = short2byte(value,MAX);
-                if(value == 0){
+                String envia = Short.toString(value);
+                byte[] toSend = envia.getBytes();
+                if(value == 0)
                     System.out.println(" > Area Critica vazia.");
-                    ProxyC consumidor = new ProxyC(rcb.getPort(),rcb.getAddress(),toSend);
-                    consumidor.run();
-                    if(criticalArea.isEmpty()){ 
-                        System.out.println(" >> Fim de Execucao.");
-                        break;
-                    }
-                }
-                else{
-                    ProxyC consumidor = new ProxyC(rcb.getPort(),rcb.getAddress(),toSend);
-                    consumidor.start();
-                }
+                ProxyC consumidor = new ProxyC(rcb.getPort(),rcb.getAddress(),toSend);
+                consumidor.start();
             }
         }
         skt.close();
         
     }
-
-    public static byte[] short2byte(short value, int max) {
-        byte[] bytes = new byte[max];
-        ByteBuffer buffer = ByteBuffer.allocate(bytes.length);
-        buffer.putShort(value);
-        return buffer.array();   
-    }
-    public static short byte2short(byte[] range) {
-        return (short)((range[1] << 8) + (range[0] & 0xff));
-    }
-    
 }

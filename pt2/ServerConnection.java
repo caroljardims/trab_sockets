@@ -19,22 +19,25 @@ public class ServerConnection extends Thread{
 
 		byte[] dado = new byte[MAX];
 		int nBytes = buffIn.read(dado, 0, dado.length);
-		short valor = byte2short(dado);
-
+		String linha = new String(dado,0,nBytes);
+		int valorInt = Integer.parseInt( linha.trim() );
+		short valor = (short)valorInt;
+		
 		if(valor != 0){
 			ca.push(valor);
 			skt.close();
 		} 
 		else {
 			short value = ca.pop();
+			System.out.println(value);
 			if(value == (short)0)
-                    System.out.println(" > Area Critica vazia.");
-			sendAnswer(value,dado,buffOut);
+                System.out.println(" > Area Critica vazia.");
+			sendAnswer(value,buffOut);
 		}
 	}
-	public void sendAnswer(short value, byte[] dado, BufferedOutputStream buffOut) throws IOException {
+	public void sendAnswer(short value, BufferedOutputStream buffOut) throws IOException {
 		String toSend = Short.toString(value);
-		dado = toSend.getBytes();
+		byte[] dado = toSend.getBytes();
 		buffOut.write(dado, 0, dado.length);
 		buffOut.flush();
 	}

@@ -22,17 +22,21 @@ public class ConsumerNoConnection {
         InetAddress ip = InetAddress.getByName(address);
         
         while(true){   
-            byte[] dado = new byte[MAX];
+            String zero = "0";
+            byte[] dado = zero.getBytes();
+            int valor = 1;
             DatagramPacket pkg = new DatagramPacket(dado, dado.length, ip, port);
             DatagramSocket skt = new DatagramSocket();
             skt.send(pkg);
 			
 			skt.setSoTimeout(3000);
+
             try{
     			DatagramPacket rcb = new DatagramPacket(dado, dado.length);
                 skt.receive(rcb);
                 dado = rcb.getData();
-                short valor = byte2short(dado);
+                String linha = new String(dado);
+                valor = Integer.parseInt( linha.trim() );
                 if(valor <= 0) break;
                 sum += (int)valor;
             } catch(SocketTimeoutException e){

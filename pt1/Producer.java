@@ -22,9 +22,9 @@ public class Producer {
         for(int i=0;i<10000;i++){
             Random gerador = new Random();
             short valor = (short)gerador.nextInt(100);
-            byte[] dado = new byte[MAX];
-            if(valor > 0) dado = short2byte(valor,MAX);
-            else dado = short2byte((short)20,MAX);
+            if(valor > 0) valor = (short)i;
+            String value = String.valueOf(valor);
+            byte[] dado = value.getBytes();
             DatagramPacket pkg = new DatagramPacket(dado, dado.length, ip, porta);
             DatagramSocket skt = new DatagramSocket();
             skt.send(pkg);
