@@ -29,7 +29,7 @@ public class ServerConnection extends Thread{
 		} 
 		else {
 			short value = ca.pop();
-			System.out.println(value);
+			//System.out.println(value);
 			if(value == (short)0)
                 System.out.println(" > Area Critica vazia.");
 			sendAnswer(value,buffOut);

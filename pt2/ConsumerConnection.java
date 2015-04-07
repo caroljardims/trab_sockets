@@ -36,7 +36,7 @@ public class ConsumerConnection {
                 int nBytes = buffIn.read(dado, 0, dado.length);
                 String rcb = new String(dado, 0, nBytes);
                 int valor = Integer.parseInt( rcb.trim() );
-                System.out.println(valor);
+                //System.out.println(valor);
                 if(valor == 0) break;
                 sum += valor;
                 skt.close();
